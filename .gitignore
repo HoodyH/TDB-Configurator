@@ -1,0 +1,5 @@
+venv/
+*.pyc
+__init__.py
+aaa.py
+test.py
