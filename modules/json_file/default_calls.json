@@ -1,0 +1,142 @@
+{
+    "DEVICE IP": {
+        "enabled": 0,
+        "name": "DEVICE IP",
+        "command": "NULL",
+        "content": "10.32.10.240",
+        "description": "Default ip in telnet for first login"
+    },
+    "DEVICE User": {
+        "enabled": 0,
+        "name": "DEVICE User",
+        "command": "NULL",
+        "content": "telnet",
+        "description": "Default user"
+    },
+    "DEVICE Passwd": {
+        "enabled": 0,
+        "name": "DEVICE Passwd",
+        "command": "NULL",
+        "content": "data",
+        "description": "Default passwd"
+    },
+    "Model": {
+        "enabled": 1,
+        "name": "Model",
+        "command": "modelkeyset",
+        "content": "PA",
+        "description": "Set_only_secret the model"
+    },
+    "Serial": {
+        "enabled": 1,
+        "name": "Serial",
+        "command": "serialnkeyset",
+        "content": "S061522180035",
+        "description": "Set_only_secret the serial number"
+    },
+    "AES key": {
+        "enabled": 1,
+        "name": "AES key",
+        "command": "proaeskeyset",
+        "content": "2b7e151628aed2a6abf7158809cf4f3c",
+        "description": "Set_only_secret the AES key"
+    },
+    "Encription": {
+        "enabled": 0,
+        "name": "Encription",
+        "command": "proaesencen",
+        "content": 1,
+        "description": "Set_only_secret the encriprion status"
+    },
+    "MAC": {
+        "enabled": 1,
+        "name": "MAC",
+        "command": "mac",
+        "content": "ac:de:48:fd:0f:d0",
+        "description": "Set/get the MAC"
+    },
+    "DHCP en": {
+        "enabled": 1,
+        "name": "DHCP en",
+        "command": "dhcp",
+        "content": 1,
+        "description": "Set/get DHCP"
+    },
+    "IP": {
+        "enabled": 1,
+        "name": "IP",
+        "command": "ip",
+        "content": "172.20.0.127",
+        "description": "Set/get the IP of the device"
+    },
+    "Netmask": {
+        "enabled": 1,
+        "name": "Netmask",
+        "command": "netmask",
+        "content": "255.255.255.0",
+        "description": "Set/get netmask of the device"
+    },
+    "Gateway": {
+        "enabled": 1,
+        "name": "Gateway",
+        "command": "gateway",
+        "content": "172.20.0.1",
+        "description": "Set/get the Gateway of the device"
+    },
+    "NTP": {
+        "enabled": 1,
+        "name": "NTP",
+        "command": "ntp+server",
+        "content": "216.239.35.8",
+        "description": "Set/get NTP of the device"
+    },
+    "DNS": {
+        "enabled": 1,
+        "name": "DNS",
+        "command": "dns+server",
+        "content": "172.20.0.201",
+        "description": "Set/get DNS of the device"
+    },
+    "TD server en": {
+        "enabled": 1,
+        "name": "TD server en",
+        "command": "tdpro",
+        "content": 1,
+        "description": "Set/get the server abilitation"
+    },
+    "TD server": {
+        "enabled": 1,
+        "name": "TD server",
+        "command": "tdpronslookup",
+        "content": "172.20.0.132",
+        "description": "Set/get ip/domaine_name of the server"
+    },
+    "TD server port": {
+        "enabled": 1,
+        "name": "TD server port",
+        "command": "tdport",
+        "content": "8080",
+        "description": "Set/get the port of the server"
+    },
+    "Daily reboot enabled": {
+        "enabled": 1,
+        "name": "Daily reboot enabled",
+        "command": "reboot+schedule+en",
+        "content": 1,
+        "description": "Set/get the daily reboot of the server"
+    },
+    "Daily reboot h": {
+        "enabled": 1,
+        "name": "Daily reboot h",
+        "command": "reboot+schedule+h",
+        "content": 23,
+        "description": "Set/get the hour of the reboot "
+    },
+    "Daily reboot min": {
+        "enabled": 1,
+        "name": "Daily reboot min",
+        "command": "reboot+schedule+m",
+        "content": 30,
+        "description": "Set/get the min of the reboot"
+    }
+}
