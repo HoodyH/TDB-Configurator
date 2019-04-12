@@ -37,6 +37,7 @@ list_to_set = []
 
 def build():
     global list_to_set
+    list_to_set = []
     i = 0
     for el in login_settings_list:
         settings_obj[el]["content"] = login_obj[i][1].get()
@@ -47,7 +48,7 @@ def build():
         settings_obj[el]["content"] = entry_obj[i][2].get()
         if 1 == entry_obj[i][0].get():
             list_to_set.append(settings_obj[el]["name"])
-            #print(settings_obj[el]["name"])
+            print(settings_obj[el]["name"])
         #print(entry_obj[i][2].get())
         i += 1
 

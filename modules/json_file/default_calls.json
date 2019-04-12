@@ -3,7 +3,7 @@
         "enabled": 0,
         "name": "DEVICE IP",
         "command": "NULL",
-        "content": "10.32.10.240",
+        "content": "172.20.0.127",
         "description": "Default ip in telnet for first login"
     },
     "DEVICE User": {
@@ -108,7 +108,7 @@
         "enabled": 1,
         "name": "TD server",
         "command": "tdpronslookup",
-        "content": "172.20.0.132",
+        "content": "172.20.0.34",
         "description": "Set/get ip/domaine_name of the server"
     },
     "TD server port": {

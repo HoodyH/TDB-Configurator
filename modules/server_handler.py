@@ -17,7 +17,7 @@ class printClass:
     def setOutputBox(self, outup_box_obj):
         self.outup_box_obj = outup_box_obj
 
-    def printClare(self, data, client):
+    def printClear(self, data, client):
         self.outup_box_obj.insert(INSERT, "Receved data in clear from {}\n".format(client))
         self.outup_box_obj.insert(INSERT, "{}\n\n".format(data))
     
@@ -47,23 +47,24 @@ class TDBaseHandler(socketserver.BaseRequestHandler):
         global print_s
         global ecb
         
-        print("Incoming Connection TDBase <{}>".format(self.client_address[0]))
+        #print("Incoming Connection TDBase <{}>".format(self.client_address[0]))
         self.request.settimeout(20)
         self.data = self.request.recv(512+HEADER_DIM) #new header dimension
-        if self.data[128:132] == b"\r\n\r\n":
-            _data = self.data[132:]
+        print(self.data)
+        print()
+        if self.data:
+            _data = self.data.decode('Latin1').split('\r\n\r\n')[1].encode('Latin1')
         else:
-            _data = self.data[133:]
+            return
         try:
             _data = _data.decode("utf-8").strip()
-            print(_data)
-            print_s.printClare(_data, self.client_address[0])
+            #print(_data)
+            print_s.printClear(_data, self.client_address[0])
         except:
             _data = ecb.decript(_data).decode("utf_8").strip()
-            print(_data)
+            #print(_data)
             print_s.printEncripted(_data, self.client_address[0])
-
-        print("Connection ended")
+        #print("Connection ended")
 
 
 td_base_server_thread_lock = 0
