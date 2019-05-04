@@ -8,7 +8,7 @@
 import threading
 import requests
 from time import sleep
-from tkinter import *
+import tkinter
 import subprocess 
 
 full_config_thread_lock = 0
