@@ -52,6 +52,7 @@ def stampings_formatting(input_string):
         input_string = input_string[1:]
     else:
         print("error")
+        return input_string
 
     while True:
         pos = input_string.find('"')
