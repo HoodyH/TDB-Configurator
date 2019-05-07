@@ -13,7 +13,8 @@ from tkinter import *
 
 HEADER_DIM = 133
 #2b7e151628aed2a6abf7158809cf4f3c
-default_passphrase = "2b7e151628aed2a6ab22158809cf4f3c"
+default_passphrase_256 = "2b7e151628aed2a6ab22158809cf4f3c"
+default_passphrase_128 = "2b7e151628aed2a6"
 
 class printClass:
     def __init__(self, outup_box_obj):
@@ -42,8 +43,24 @@ class ECBClass:
         return aes.decrypt(encrypted)
 
 print_s = printClass(None)
-ecb = ECBClass(default_passphrase)
+ecb = ECBClass(default_passphrase_128)
 
+def stampings_formatting(input_string):
+    out_string = ''
+
+    if input_string.find('"') == 0:
+        input_string = input_string[1:]
+    else:
+        print("error")
+
+    while True:
+        pos = input_string.find('"')
+        if pos == -1:
+            break
+        out_string += '"' + input_string[:pos+1] + "\n"
+        input_string = input_string[pos+2:]
+    
+    return out_string
 
 class TDBaseHandler(socketserver.BaseRequestHandler):
 
@@ -61,15 +78,15 @@ class TDBaseHandler(socketserver.BaseRequestHandler):
             _data = self.data.decode('Latin1').split('\r\n\r\n')[1].encode('Latin1')
         else:
             return
+        
 
         try:
             _data = _data.decode("utf-8").strip()
-            #print(_data)
-            print_s.printClear(_data, self.client_address[0])
+
+            print_s.printClear(stampings_formatting(_data), self.client_address[0])
         except:
             _data = ecb.decript(_data).decode("utf_8").strip()
-            #print(_data)
-       	    print_s.printEncripted(_data, self.client_address[0])
+       	    print_s.printEncripted(stampings_formatting(_data), self.client_address[0])
             
         #print("Connection ended")
 
