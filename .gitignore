@@ -1,5 +1,9 @@
-venv/
+env/
+#modules/__pycache__/
+.vscode/
 *.pyc
+*.out
 __init__.py
 aaa.py
 test.py
+

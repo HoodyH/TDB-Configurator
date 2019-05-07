@@ -1,4 +1,9 @@
-#!/usr/bin/python3
+#=================================#
+#==TDbase GUI software============#
+#==Writtten by: Simone Not========#
+#==06/04/2019=====================#
+#==Version: 1.3.1=================#
+#=================================#
 
 import socketserver
 import socket
@@ -56,6 +61,7 @@ class TDBaseHandler(socketserver.BaseRequestHandler):
             _data = self.data.decode('Latin1').split('\r\n\r\n')[1].encode('Latin1')
         else:
             return
+
         try:
             _data = _data.decode("utf-8").strip()
             #print(_data)
@@ -63,7 +69,8 @@ class TDBaseHandler(socketserver.BaseRequestHandler):
         except:
             _data = ecb.decript(_data).decode("utf_8").strip()
             #print(_data)
-            print_s.printEncripted(_data, self.client_address[0])
+       	    print_s.printEncripted(_data, self.client_address[0])
+            
         #print("Connection ended")
 
 
