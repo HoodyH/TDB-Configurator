@@ -24,9 +24,12 @@ settings_list = [
         "TD server en",
         "TD server",
         "TD server port",
-        "Daily reboot enabled",
+        "Daily reboot en",
         "Daily reboot h",
-        "Daily reboot min"
+        "Daily reboot min",
+        "Persistent ping en",
+        "Persistent ping",
+        "Send timeout"
     ]
 
 login_settings_list = ["DEVICE IP","DEVICE User","DEVICE Passwd"]
@@ -39,19 +42,23 @@ tdBase_calls =   [
         [1, "Serial"                ,"serialnkeyset"        ,"S061522180035"			        	,"Set_only_secret the serial number"],
         [1, "AES key"               ,"proaeskeyset"	        ,"2b7e151628aed2a6abf7158809cf4f3c"     ,"Set_only_secret the AES key"],
         [0, "Encription"            ,"proaesencen"          ,1                                      ,"Set_only_secret the encriprion status"],
-        [1, "MAC"                   ,"mac"                  ,"ac:de:48:fd:0f:d0"                    ,"Set/get the MAC"],
-        [1, "DHCP en"               ,"dhcp"	                ,1							        	,"Set/get DHCP"],  
-        [1, "IP"                    ,"ip"                   ,"172.20.0.127"				            ,"Set/get the IP of the device"],
-        [1, "Netmask"               ,"netmask"              ,"255.255.255.0"			            ,"Set/get netmask of the device"],
-        [1, "Gateway"               ,"gateway"              ,"172.20.0.1"				            ,"Set/get the Gateway of the device"],
-        [1, "NTP"                   ,"ntp+server"           ,"216.239.35.8"				            ,"Set/get NTP of the device"],
-        [1, "DNS"                   ,"dns+server"           ,"172.20.0.201"				            ,"Set/get DNS of the device"],
+        [0, "MAC"                   ,"mac"                  ,"ac:de:48:fd:0f:d0"                    ,"Set/get the MAC"],
+        [0, "DHCP en"               ,"dhcp"	                ,1							        	,"Set/get DHCP"],  
+        [0, "IP"                    ,"ip"                   ,"172.20.0.127"				            ,"Set/get the IP of the device"],
+        [0, "Netmask"               ,"netmask"              ,"255.255.255.0"			            ,"Set/get netmask of the device"],
+        [0, "Gateway"               ,"gateway"              ,"172.20.0.1"				            ,"Set/get the Gateway of the device"],
+        [0, "NTP"                   ,"ntp+server"           ,"216.239.35.8"				            ,"Set/get NTP of the device"],
+        [0, "DNS"                   ,"dns+server"           ,"172.20.0.201"				            ,"Set/get DNS of the device"],
         [1, "TD server en"          ,"tdpro"                ,1							        	,"Set/get the server abilitation"],
         [1, "TD server"             ,"tdpronslookup"        ,"172.20.0.132"			        	    ,"Set/get ip/domaine_name of the server"],
         [1, "TD server port"        ,"tdport"               ,"8080"					     	    	,"Set/get the port of the server"],
-        [1, "Daily reboot enabled"  ,"reboot+schedule+en"   ,1                                      ,"Set/get the daily reboot of the server"],
-        [1, "Daily reboot h"        ,"reboot+schedule+h"    ,23                                     ,"Set/get the hour of the reboot "],
-        [1, "Daily reboot min"      ,"reboot+schedule+m"    ,30                                     ,"Set/get the min of the reboot"]
+        [0, "Daily reboot en"       ,"reboot+schedule+en"   ,1                                      ,"Set/get the daily reboot of the server"],
+        [0, "Daily reboot h"        ,"reboot+schedule+h"    ,23                                     ,"Set/get the hour of the reboot "],
+        [0, "Daily reboot min"      ,"reboot+schedule+m"    ,30                                     ,"Set/get the min of the reboot"],
+        [0, "Persistent ping en"    ,"persistent+ping+en"   ,1                                      ,"Set/get the abilitation of PING call"],
+        [0, "Persistent ping"       ,"persistent+ping+en"   ,30                                     ,"Set/get the delay of the persistent ping"],
+        [0, "Send timeout"          ,"send+timeout"         ,10                                     ,"Set/get the max age before send anyway the stampings"]
+
         
         #["Tag list"     ,"tagslist"             ,"NULL"                                 ,"Get all the stampings, sice flash"],
     ]
