@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "TDbase_gui.py", line 148, in <module>
-    win.mainloop()
-  File "/usr/lib/python3.5/tkinter/__init__.py", line 1134, in mainloop
-    self.tk.mainloop(n)
-KeyboardInterrupt
