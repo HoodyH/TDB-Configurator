@@ -9,6 +9,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import scrolledtext
 from modules.request_handler import requestSdFile
+from modules.request_handler import deviceConfiguration
 import datetime
 
 def windowBuild(name, geometry, background_color):
@@ -74,19 +75,30 @@ def configLogin(window, settings_obj, settings_list, entry_width, background_col
 
     return login_arr_obj
 
+def setThisElement(getSettings, element_to_set, login_settings_list):
+            element = []
+            element.append(element_to_set)
+            settings = getSettings()
+            print("\nReconfigurating this field")
+            config_thread = deviceConfiguration(settings, element, login_settings_list)
+            config_thread.start()
 
-def configEntries(window, settings_obj, settings_list, start_row, entry_width, background_color):
+def configEntries(window, settings_obj, settings_list, start_row, entry_width, background_color, getSettings, login_settings_list):
     
     entries_matix_oby = []
+    button_obj_array = []
 
     row = start_row
+    count = 0
     for el in settings_list:
+        button_obj_array.append(None)
+
         entry_arr_obj = []
         col = 0
 
         enabled = settings_obj[el]["enabled"]
         name = settings_obj[el]["name"]
-        #command = json_obj[el]["command"]
+        reboot_needed = settings_obj[el]["reboot_needed"]
         content = settings_obj[el]["content"]
         description = settings_obj[el]["description"]
 
@@ -109,10 +121,13 @@ def configEntries(window, settings_obj, settings_list, start_row, entry_width, b
         inbox.grid(column=col, row=row)
         col += 1 #increment col
 
-        btn = Button(window, text="Set .this")
-        entry_arr_obj.append(btn)#save button obj
-        btn.grid(column=col, row=row)
-        col += 1 #increment col
+        if 0 == reboot_needed:
+            button_obj_array[count] = Button(window, text="Set", command=lambda:setThisElement(getSettings, name, login_settings_list))
+            entry_arr_obj.append(button_obj_array[count])#save button obj
+            button_obj_array[count].grid(column=col, row=row)
+            col += 1 #increment col
+        else:
+            col += 1 #increment col
 
         dscrpt = Label(window, text=description)
         entry_arr_obj.append(dscrpt) #save label obj
@@ -121,6 +136,7 @@ def configEntries(window, settings_obj, settings_list, start_row, entry_width, b
 
         entries_matix_oby.append(entry_arr_obj) #save the obj row to the matrix
         row += 1 #increment row
+        count += 1
 
     return entries_matix_oby
 

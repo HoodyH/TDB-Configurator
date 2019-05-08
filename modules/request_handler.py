@@ -11,13 +11,18 @@ from time import sleep
 from tkinter import *
 import subprocess 
 
-full_config_thread_lock = 0
+timeout_connection = 5
+timeout_short_request = 3
+timeout_long_request = 10
 
-class fullConfiguration(threading.Thread):
+
+device_config_thread_lock = 0
+
+class deviceConfiguration(threading.Thread):
         def __init__(self, settings_obj, list_to_set, login_settings_list):
                 self._stopevent = threading.Event(  )
                 self._sleepperiod = 1.0
-                super(fullConfiguration, self).__init__()
+                super(deviceConfiguration, self).__init__()
                 self.settings_obj = settings_obj
                 self.list_to_set = list_to_set
                 self.login_settings_list = login_settings_list
@@ -28,35 +33,53 @@ class fullConfiguration(threading.Thread):
                 threading.Thread.join(self, timeout)
 
         def run(self):
-                global full_config_thread_lock
-                if 1 == full_config_thread_lock:
-                        print("The configuration has already begin!")
+                global timeout_connection
+                global timeout_short_request
+                global device_config_thread_lock
+                if 1 == device_config_thread_lock:
+                        print("There is alread an ongoing config routine!")
                         return
-                full_config_thread_lock = 1
+                device_config_thread_lock = 1
                 ip_device = self.settings_obj[self.login_settings_list[0]]["content"]
                 user = self.settings_obj[self.login_settings_list[1]]["content"]
                 passwd = self.settings_obj[self.login_settings_list[2]]["content"]
 
+                reboot = 0
+
                 for el in self.list_to_set:
                         if self._stopevent.isSet():
-                                full_config_thread_lock = 0
+                                device_config_thread_lock = 0
                                 print("\nUSER ABORT!")
                                 return
+
                         name = self.settings_obj[el]["name"]
                         content = self.settings_obj[el]["content"]
                         command = self.settings_obj[el]["command"]
+                        reboot_needed = self.settings_obj[el]["reboot_needed"]
+                        
+                        if 1 == reboot_needed:
+                             reboot = 1
+                           
                         print("{}: {}".format(name, content))
                         try:
-                                requests.get("http://{}/ecmd?{}+{}".format(ip_device, command, content), auth=(user, passwd))
+                                requests.get("http://{}/ecmd?{}+{}".format(ip_device, command, content), auth=(user, passwd) ,timeout=(timeout_connection, timeout_short_request))
                         except:
                                 print("I can't comunicate with the Decive")
-                                full_config_thread_lock = 0
+                                device_config_thread_lock = 0
                                 return
                         sleep(0.2)
-
-                requests.get("http://"+ip_device+"/ecmd?reset", auth=(user, passwd))
-                print("\nDONE!")
-                full_config_thread_lock = 0
+                
+                if 1 == reboot:
+                        try:
+                                requests.get("http://"+ip_device+"/ecmd?reset", auth=(user, passwd) ,timeout=(timeout_connection, timeout_short_request))
+                                print("\nRebooting!\nDone")
+                        except:
+                                print("I can't reboot the Decive")
+                                device_config_thread_lock = 0
+                                return
+                else:
+                        print("\nDONE!")
+                device_config_thread_lock = 0
 
 
 request_stampings_thread_lock = 0
@@ -69,6 +92,8 @@ class requestStampings(threading.Thread):
                 self.outup_box_obj = outup_box_obj
 
         def run(self):
+                global timeout_connection
+                global timeout_long_request
                 global request_stampings_thread_lock
                 if 1 == request_stampings_thread_lock:
                         print("The request has already begin!")
@@ -81,14 +106,14 @@ class requestStampings(threading.Thread):
                 content = ""
                 command = "tagslist"
                 try:
-                        out = requests.get("http://{}/ecmd?{}+{}".format(ip_device, command, content), auth=(user, passwd))
+                        out = requests.get("http://{}/ecmd?{}+{}".format(ip_device, command, content), auth=(user, passwd) ,timeout=(timeout_connection, timeout_long_request))
                 except:
                         print("I can't comunicate with the Decive")
                         request_stampings_thread_lock = 0
                         return
                 self.outup_box_obj.insert(INSERT, "\n\n")
                 self.outup_box_obj.insert(INSERT, out.text)
-                print("\nDONE!")
+                print("\nNo reboot needed\nDONE!")
                 request_stampings_thread_lock = 0
 
 
@@ -103,6 +128,8 @@ class requestSdFile(threading.Thread):
                 self.file_name = file_name
 
         def run(self):
+                global timeout_connection
+                global timeout_long_request
                 global request_sd_file_thread_lock
                 if 1 == request_sd_file_thread_lock:
                         print("The request has already begin!")
@@ -113,7 +140,7 @@ class requestSdFile(threading.Thread):
                 passwd = self.settings_obj[self.login_settings_list[2]]["content"]
 
                 try:
-                        out = requests.get("http://{}/{}".format(ip_device, self.file_name), auth=(user, passwd))
+                        out = requests.get("http://{}/{}".format(ip_device, self.file_name), auth=(user, passwd) ,timeout=(timeout_connection, timeout_long_request))
                 except:
                         print("I can't comunicate with the Decive")
                         request_sd_file_thread_lock = 0

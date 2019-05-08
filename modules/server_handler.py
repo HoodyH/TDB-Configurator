@@ -51,7 +51,12 @@ def stampings_formatting(input_string):
     if input_string.find('"') == 0:
         input_string = input_string[1:]
     else:
-        print("error")
+        #clean the message from the 0
+        #print("no_stampings")
+        length = len(input_string)
+        while input_string[length-1] == "0":
+            length -= 1
+            input_string = input_string[:length-1]
         return input_string
 
     while True:
@@ -63,7 +68,8 @@ def stampings_formatting(input_string):
     
     return out_string
 
-class TDBaseHandler(socketserver.BaseRequestHandler):
+
+class TDBaseHandler(socketserver.StreamRequestHandler):
 
     def handle(self):
         global HEADER_DIM
@@ -86,9 +92,10 @@ class TDBaseHandler(socketserver.BaseRequestHandler):
 
             print_s.printClear(stampings_formatting(_data), self.client_address[0])
         except:
-            _data = ecb.decript(_data).decode("utf_8").strip()
+            _data = ecb.decript(_data).decode("utf-8").strip()
        	    print_s.printEncripted(stampings_formatting(_data), self.client_address[0])
-            
+        finally:
+            self.wfile.write("hello".encode("utf-8"))  
         #print("Connection ended")
 
 

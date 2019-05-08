@@ -29,9 +29,6 @@ settings_obj = loadJsonSettings("default_calls")
 #====================================================================================
 #Config PAGE
 #====================================================================================
-login_obj = configLogin(tabs_array[0], settings_obj, login_settings_list, 13, None)
-entry_obj = configEntries(tabs_array[0], settings_obj, settings_list, 2, 20, None)
-
 full_config_thread = None #storage location for the thread
 list_to_set = []
 
@@ -48,7 +45,7 @@ def build():
         settings_obj[el]["content"] = entry_obj[i][2].get()
         if 1 == entry_obj[i][0].get():
             list_to_set.append(settings_obj[el]["name"])
-            print(settings_obj[el]["name"])
+            #print(settings_obj[el]["name"])
         #print(entry_obj[i][2].get())
         i += 1
 
@@ -56,8 +53,8 @@ def config():
     global full_config_thread
     global list_to_set
     build()
-    print("calling full configuration function")
-    full_config_thread = fullConfiguration(settings_obj, list_to_set, login_settings_list)
+    print("\nDevice Configuration")
+    full_config_thread = deviceConfiguration(settings_obj, list_to_set, login_settings_list)
     full_config_thread.start()
 
 def killConfig():
@@ -66,7 +63,15 @@ def killConfig():
         full_config_thread.join()
         full_config_thread = None
     else:
-        print("The fullConfiguration thread isn't running")
+        print("\nThe Device Configuration thread isn't running")
+
+def freshSettings():
+    build()
+    return settings_obj
+
+#build table
+login_obj = configLogin(tabs_array[0], settings_obj, login_settings_list, 13, None)
+entry_obj = configEntries(tabs_array[0], settings_obj, settings_list, 2, 20, None, freshSettings, login_settings_list)
 
 #local_buttons
 x_button = win_x-170
@@ -88,7 +93,7 @@ server_thread = None
 def server():
     global server_thread
     build()
-    print("calling start server function")
+    print("Calling start server function")
     server_thread = TDBaseServer(settings_obj, txt_sever_box)
     server_thread.start()
 
