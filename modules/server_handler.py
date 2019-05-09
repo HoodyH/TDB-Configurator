@@ -10,11 +10,15 @@ import socket
 from Crypto.Cipher import AES
 import threading
 from tkinter import *
+import datetime
 
 HEADER_DIM = 133
 #2b7e151628aed2a6abf7158809cf4f3c
 default_passphrase_256 = "2b7e151628aed2a6ab22158809cf4f3c"
 default_passphrase_128 = "2b7e151628aed2a6"
+
+def getTime(now):
+    return "On {}/{}/{} at {}:{}:{}".format(str(now.day), str(now.month), str(now.year), str(now.hour), str(now.minute), str(now.second))
 
 class printClass:
     def __init__(self, outup_box_obj):
@@ -24,11 +28,13 @@ class printClass:
         self.outup_box_obj = outup_box_obj
 
     def printClear(self, data, client):
-        self.outup_box_obj.insert(INSERT, "Receved data in clear from {}\n".format(client))
+        now = datetime.datetime.now()
+        self.outup_box_obj.insert(INSERT, "Receved data in clear from {}\n{}\n".format(client, getTime(now)))
         self.outup_box_obj.insert(INSERT, "{}\n\n".format(data))
     
     def printEncripted(self, data, client):
-        self.outup_box_obj.insert(INSERT, "Receved Encripted data from {}\n".format(client))
+        now = datetime.datetime.now()
+        self.outup_box_obj.insert(INSERT, "Receved Encripted data from {}\n{}\n".format(client, getTime(now)))
         self.outup_box_obj.insert(INSERT, "{}\n\n".format(data))
 
 class ECBClass:
@@ -42,8 +48,10 @@ class ECBClass:
         aes = AES.new(self.key, AES.MODE_ECB)
         return aes.decrypt(encrypted)
 
+
 print_s = printClass(None)
 ecb = ECBClass(default_passphrase_128)
+
 
 def stampings_formatting(input_string):
     out_string = ''
@@ -51,12 +59,10 @@ def stampings_formatting(input_string):
     if input_string.find('"') == 0:
         input_string = input_string[1:]
     else:
-        #clean the message from the 0
-        #print("no_stampings")
-        length = len(input_string)
-        while input_string[length-1] == "0":
-            length -= 1
-            input_string = input_string[:length-1]
+        # clean the message from the 0
+        # print("no_stampings")
+        while input_string[-1] == "0":
+            input_string = input_string[:-1]
         return input_string
 
     while True:
@@ -85,19 +91,17 @@ class TDBaseHandler(socketserver.StreamRequestHandler):
             _data = self.data.decode('Latin1').split('\r\n\r\n')[1].encode('Latin1')
         else:
             return
-        
 
         try:
             _data = _data.decode("utf-8").strip()
 
             print_s.printClear(stampings_formatting(_data), self.client_address[0])
-        except:
+        except Exception as exc:
             _data = ecb.decript(_data).decode("utf-8").strip()
-       	    print_s.printEncripted(stampings_formatting(_data), self.client_address[0])
+            print_s.printEncripted(stampings_formatting(_data), self.client_address[0])
         finally:
-            self.wfile.write("hello".encode("utf-8"))  
+            self.wfile.write("hello".encode("utf-8"))
         #print("Connection ended")
-
 
 td_base_server_thread_lock = 0
 

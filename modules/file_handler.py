@@ -22,7 +22,7 @@ settings_list = [
         "NTP",
         "DNS",
         "TD server en",
-        "TD server",
+        "TD server",S
         "TD server port",
         "Daily reboot en",
         "Daily reboot h",
@@ -120,5 +120,7 @@ def loadJsonData():
         json_obj = createDefaultDataJson()
     return json_obj
 
+def saveDeviceConfigurations():
+    return
 
 

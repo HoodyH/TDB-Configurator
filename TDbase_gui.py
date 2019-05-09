@@ -114,7 +114,7 @@ btn = Button(tabs_array[1], text="Stop Server", command=killServer)
 btn.place(x=x_button, y=y_button)
 
 #====================================================================================
-#Server PAGE
+#Get Stampings PAGE
 #====================================================================================
 txt_stampings_box = buildScroll(tabs_array[2])
 txt_stampings_box.insert(INSERT,"The stampings will be shown here.")

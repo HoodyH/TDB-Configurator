@@ -1,11 +1,12 @@
 env/
 modules/__pycache__/
+
 modules/json_file/default_calls.json
+
 .vscode/
+
 *.pyc
 *.out
 __init__.py
 
 test.py
-
-modules/json_file/default_calls.json
