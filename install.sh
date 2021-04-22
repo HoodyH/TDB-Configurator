@@ -2,14 +2,14 @@
 
 #install the base requirements at system level
 sudo apt update
-sudo apt install python3 -y 
-sudo apt install python3-pip -y 
+sudo apt install python3 
+sudo apt install python3-pip
 
 #install the main libs at system level
-sudo apt install python-tk -y 
+sudo apt install python-tk
 
 #create the virtual env
-sudo apt install python3-venv -y
+sudo apt install python3-venv
 python3 -m venv venv
 source env/bin/activate
 
