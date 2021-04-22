@@ -22,7 +22,7 @@ settings_list = [
         "NTP",
         "DNS",
         "TD server en",
-        "TD server",S
+        "TD server",
         "TD server port",
         "Daily reboot en",
         "Daily reboot h",
