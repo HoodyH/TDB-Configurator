@@ -111,8 +111,6 @@ class TDBaseServer(threading.Thread):
                 self.settings_obj = settings_obj
                 self.outup_box_obj = outup_box_obj
 
-
-
         def run(self):
                 global td_base_server_thread_lock
                 global print_s
@@ -157,5 +155,3 @@ class TDBaseServer(threading.Thread):
                     print("Terminazione server")
                     self.outup_box_obj.insert(INSERT, "Shuting down\n")
                 td_base_server_thread_lock = 0
-
-
