@@ -1,18 +1,10 @@
-tdbase_v2-configurator
+# tdbase_v2-configurator
+A program to configure the tdb terminal
 
-Install python3-tk gui lib
-sudo apt install python3-tk
+## Install
+use install.sh on ubuntu to install all the requirements
 
+## Execute
+use tdbgui.sh to run
 
-create a new virtual env for pyton to run the program
-pyvenv-3.5 venv
-source venv/bin/activate
-
-Install all libs required
-pip install -r requirments 
-
-run the program
-python3 TDbase_gui.py
-
-
-
+you can also manually run the main.py
